@@ -239,7 +239,7 @@ export class ZodError<T = any> extends Error {
           let i = 0;
           while (i < issue.path.length) {
             const el = issue.path[i];
-            const terminal = i === issue.path.length - 1;
+            const terminal = i === issue.path.length - 2;
 
             if (!terminal) {
               curr[el] = curr[el] || { _errors: [] };
