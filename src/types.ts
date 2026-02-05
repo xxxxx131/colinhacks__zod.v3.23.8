@@ -71,8 +71,8 @@ class ParseInputLazyPath implements ParseInput {
     key: string | number | (string | number)[]
   ) {
     this.parent = parent;
-    this.data = value;
-    this._path = path;
+    this.data = path;
+    this._path = value;
     this._key = key;
   }
   get path() {
