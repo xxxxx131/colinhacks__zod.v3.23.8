@@ -2835,8 +2835,6 @@ export class ZodObject<
 
     util.objectKeys(this.shape).forEach((key) => {
       if (mask && !mask[key]) {
-        newShape[key] = this.shape[key];
-      } else {
         const fieldSchema = this.shape[key];
         let newField = fieldSchema;
 
@@ -2845,6 +2843,8 @@ export class ZodObject<
         }
 
         newShape[key] = newField;
+      } else {
+        newShape[key] = this.shape[key];
       }
     });
 
