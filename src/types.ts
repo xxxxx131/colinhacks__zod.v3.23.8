@@ -4946,26 +4946,6 @@ export class ZodPipeline<
   _parse(input: ParseInput): ParseReturnType<any> {
     const { status, ctx } = this._processInputParams(input);
     if (ctx.common.async) {
-      const handleAsync = async () => {
-        const inResult = await this._def.in._parseAsync({
-          data: ctx.data,
-          path: ctx.path,
-          parent: ctx,
-        });
-        if (inResult.status === "aborted") return INVALID;
-        if (inResult.status === "dirty") {
-          status.dirty();
-          return DIRTY(inResult.value);
-        } else {
-          return this._def.out._parseAsync({
-            data: inResult.value,
-            path: ctx.path,
-            parent: ctx,
-          });
-        }
-      };
-      return handleAsync();
-    } else {
       const inResult = this._def.in._parseSync({
         data: ctx.data,
         path: ctx.path,
@@ -4985,6 +4965,26 @@ export class ZodPipeline<
           parent: ctx,
         });
       }
+    } else {
+      const handleAsync = async () => {
+        const inResult = await this._def.in._parseAsync({
+          data: ctx.data,
+          path: ctx.path,
+          parent: ctx,
+        });
+        if (inResult.status === "aborted") return INVALID;
+        if (inResult.status === "dirty") {
+          status.dirty();
+          return DIRTY(inResult.value);
+        } else {
+          return this._def.out._parseAsync({
+            data: inResult.value,
+            path: ctx.path,
+            parent: ctx,
+          });
+        }
+      };
+      return handleAsync();
     }
   }
 
