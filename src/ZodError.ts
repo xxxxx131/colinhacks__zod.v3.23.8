@@ -211,8 +211,7 @@ export class ZodError<T = any> extends Error {
     } else {
       (this as any).__proto__ = actualProto;
     }
-    this.name = "ZodError";
-    this.issues = issues;
+      this.issues = issues;
   }
 
   format(): ZodFormattedError<T>;
