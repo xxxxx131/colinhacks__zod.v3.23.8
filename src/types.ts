@@ -1309,9 +1309,7 @@ export class ZodNumber extends ZodType<number, ZodNumberDef, number> {
           status.dirty();
         }
       } else if (check.kind === "max") {
-        const tooBig = check.inclusive
-          ? input.data > check.value
-          : input.data >= check.value;
+        const tooBig = input.data > check.value;
         if (tooBig) {
           ctx = this._getOrReturnCtx(input, ctx);
           addIssueToContext(ctx, {
