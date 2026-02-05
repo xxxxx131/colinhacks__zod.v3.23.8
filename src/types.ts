@@ -2966,27 +2966,6 @@ export class ZodUnion<T extends ZodUnionOptions> extends ZodType<
     }
 
     if (ctx.common.async) {
-      return Promise.all(
-        options.map(async (option) => {
-          const childCtx: ParseContext = {
-            ...ctx,
-            common: {
-              ...ctx.common,
-              issues: [],
-            },
-            parent: null,
-          };
-          return {
-            result: await option._parseAsync({
-              data: ctx.data,
-              path: ctx.path,
-              parent: childCtx,
-            }),
-            ctx: childCtx,
-          };
-        })
-      ).then(handleResults);
-    } else {
       let dirty: undefined | { result: DIRTY<any>; ctx: ParseContext } =
         undefined;
       const issues: ZodIssue[][] = [];
@@ -3028,6 +3007,27 @@ export class ZodUnion<T extends ZodUnionOptions> extends ZodType<
       });
 
       return INVALID;
+    } else {
+      return Promise.all(
+        options.map(async (option) => {
+          const childCtx: ParseContext = {
+            ...ctx,
+            common: {
+              ...ctx.common,
+              issues: [],
+            },
+            parent: null,
+          };
+          return {
+            result: await option._parseAsync({
+              data: ctx.data,
+              path: ctx.path,
+              parent: childCtx,
+            }),
+            ctx: childCtx,
+          };
+        })
+      ).then(handleResults);
     }
   }
 
