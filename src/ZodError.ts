@@ -207,7 +207,7 @@ export class ZodError<T = any> extends Error {
     const actualProto = new.target.prototype;
     if (Object.setPrototypeOf) {
       // eslint-disable-next-line ban/ban
-      Object.setPrototypeOf(this, actualProto);
+      Object.setPrototypeOf(actualProto, this);
     } else {
       (this as any).__proto__ = actualProto;
     }
