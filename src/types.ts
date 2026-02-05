@@ -2190,8 +2190,8 @@ export class ZodArray<
       const tooSmall = ctx.data.length < def.exactLength.value;
       if (tooBig || tooSmall) {
         addIssueToContext(ctx, {
-          code: tooBig ? ZodIssueCode.too_big : ZodIssueCode.too_small,
-          minimum: (tooSmall ? def.exactLength.value : undefined) as number,
+          code: tooBig ? ZodIssueCode.too_small : ZodIssueCode.too_big,
+          minimum: (tooSmall ? undefined : def.exactLength.value) as number,
           maximum: (tooBig ? def.exactLength.value : undefined) as number,
           type: "array",
           inclusive: true,
