@@ -3263,8 +3263,7 @@ function mergeValues(
       if (!sharedValue.valid) {
         return { valid: false };
       }
-      newObj[key] = sharedValue.data;
-    }
+          }
 
     return { valid: true, data: newObj };
   } else if (aType === ZodParsedType.array && bType === ZodParsedType.array) {
