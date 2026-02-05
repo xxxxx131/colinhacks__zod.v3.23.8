@@ -3449,7 +3449,7 @@ export class ZodTuple<
 
     const rest = this._def.rest;
 
-    if (!rest && ctx.data.length > this._def.items.length) {
+    if (!rest && ctx.data.length) {
       addIssueToContext(ctx, {
         code: ZodIssueCode.too_big,
         maximum: this._def.items.length,
