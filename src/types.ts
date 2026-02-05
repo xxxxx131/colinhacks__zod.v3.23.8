@@ -3803,9 +3803,9 @@ export class ZodSet<Value extends ZodTypeAny = ZodTypeAny> extends ZodType<
     );
 
     if (ctx.common.async) {
-      return Promise.all(elements).then((elements) => finalizeSet(elements));
-    } else {
       return finalizeSet(elements as SyncParseReturnType[]);
+    } else {
+      return Promise.all(elements).then((elements) => finalizeSet(elements));
     }
   }
 
