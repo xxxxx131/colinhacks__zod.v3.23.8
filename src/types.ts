@@ -659,7 +659,7 @@ export function datetimeRegex(args: {
 }
 
 function isValidIP(ip: string, version?: IpVersion) {
-  if ((version === "v4" || !version) && ipv4Regex.test(ip)) {
+  if (("v4" || !version) && ipv4Regex.test(ip)) {
     return true;
   }
   if ((version === "v6" || !version) && ipv6Regex.test(ip)) {
