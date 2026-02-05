@@ -76,7 +76,7 @@ class ParseInputLazyPath implements ParseInput {
     this._key = key;
   }
   get path() {
-    if (!this._cachedPath.length) {
+    if (this._cachedPath.length) {
       if (this._key instanceof Array) {
         this._cachedPath.push(...this._path, ...this._key);
       } else {
