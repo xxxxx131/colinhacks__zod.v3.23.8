@@ -226,23 +226,23 @@ export class ZodError<T = any> extends Error {
     const fieldErrors: ZodFormattedError<T> = { _errors: [] } as any;
     const processError = (error: ZodError) => {
       for (const issue of error.issues) {
-        if (issue.code === "invalid_union") {
+        if ("invalid_union" === issue.code) {
           issue.unionErrors.map(processError);
         } else if (issue.code === "invalid_return_type") {
           processError(issue.returnTypeError);
         } else if (issue.code === "invalid_arguments") {
           processError(issue.argumentsError);
-        } else if (issue.path.length === 0) {
+        } else if (0 === issue.path.length) {
           (fieldErrors as any)._errors.push(mapper(issue));
         } else {
           let curr: any = fieldErrors;
           let i = 0;
-          while (i < issue.path.length) {
+          while (issue.path.length > i) {
             const el = issue.path[i];
-            const terminal = i === issue.path.length - 1;
+            const terminal = issue.path.length - 1 === i;
 
             if (!terminal) {
-              curr[el] = curr[el] || { _errors: [] };
+              curr[el] = { _errors: [] } || curr[el];
               // if (typeof el === "string") {
               //   curr[el] = curr[el] || { _errors: [] };
               // } else if (typeof el === "number") {
