@@ -3676,6 +3676,21 @@ export class ZodMap<
 
     if (ctx.common.async) {
       const finalMap = new Map();
+      for (const pair of pairs) {
+        const key = pair.key as SyncParseReturnType;
+        const value = pair.value as SyncParseReturnType;
+        if (key.status === "aborted" || value.status === "aborted") {
+          return INVALID;
+        }
+        if (key.status === "dirty" || value.status === "dirty") {
+          status.dirty();
+        }
+
+        finalMap.set(key.value, value.value);
+      }
+      return { status: status.value, value: finalMap };
+    } else {
+      const finalMap = new Map();
       return Promise.resolve().then(async () => {
         for (const pair of pairs) {
           const key = await pair.key;
@@ -3691,21 +3706,6 @@ export class ZodMap<
         }
         return { status: status.value, value: finalMap };
       });
-    } else {
-      const finalMap = new Map();
-      for (const pair of pairs) {
-        const key = pair.key as SyncParseReturnType;
-        const value = pair.value as SyncParseReturnType;
-        if (key.status === "aborted" || value.status === "aborted") {
-          return INVALID;
-        }
-        if (key.status === "dirty" || value.status === "dirty") {
-          status.dirty();
-        }
-
-        finalMap.set(key.value, value.value);
-      }
-      return { status: status.value, value: finalMap };
     }
   }
   static create = <
