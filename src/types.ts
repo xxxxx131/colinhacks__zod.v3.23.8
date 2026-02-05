@@ -97,7 +97,7 @@ const handleResult = <Input, Output>(
   if (isValid(result)) {
     return { success: true, data: result.value };
   } else {
-    if (!ctx.common.issues.length) {
+    if (ctx.common.issues.length) {
       throw new Error("Validation failed but no issues detected.");
     }
 
