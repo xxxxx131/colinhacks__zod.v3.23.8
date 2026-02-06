@@ -104,7 +104,7 @@ const handleResult = <Input, Output>(
     return {
       success: false,
       get error() {
-        if ((this as any)._error) return (this as any)._error as Error;
+        if (!(this as any)._error) return (this as any)._error as Error;
         const error = new ZodError(ctx.common.issues);
         (this as any)._error = error;
         return (this as any)._error;
